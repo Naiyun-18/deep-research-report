@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Research ｜ 深度研究报告库</title>
+<style>
+  :root{
+    --bg:#eef4f2; --card:#ffffff; --ink:#1a2b28; --sub:#5b6f6a;
+    --teal:#0f766e; --teal-strong:#0b5d57; --teal-soft:#e0f2ef;
+    --amber:#b45309; --line:#dfe9e6;
+    --shadow:0 4px 18px rgba(15,90,80,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;padding:24px 16px}
+  .wrap{max-width:1020px;margin:0 auto}
+  .hero{background:linear-gradient(135deg,#0f766e,#0b5d57);color:#fff;border-radius:16px;padding:30px 32px;margin-bottom:22px;box-shadow:var(--shadow)}
+  .hero h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+  .hero .sub{margin-top:8px;font-size:13.5px;opacity:.92}
+  .hero .tagline{margin-top:14px;display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:4px 12px;border-radius:20px;font-size:12px}
+  .card{background:var(--card);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .card h2{font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .card h2 .num{display:inline-flex;width:24px;height:24px;border-radius:7px;background:var(--teal);color:#fff;align-items:center;justify-content:center;font-size:13px;flex:none}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .rep{background:#f7fbfa;border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;transition:.2s}
+  .rep:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--teal)}
+  .rep .ctg{display:inline-block;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600;align-self:flex-start}
+  .ctg-mid{background:var(--teal-soft);color:var(--teal)}
+  .ctg-new{background:#fff4e5;color:#b26a00;margin-left:6px}
+  .rep h3{font-size:16px;font-weight:700;margin:10px 0 4px}
+  .rep .co{font-size:12.5px;color:var(--sub)}
+  .rep .dt{font-size:12px;color:var(--sub);margin-top:6px}
+  .rep .desc{font-size:12.5px;color:var(--sub);margin-top:8px;min-height:38px}
+  .rep a.link{margin-top:14px;display:inline-flex;align-items:center;gap:6px;color:var(--teal);font-weight:600;font-size:13.5px;text-decoration:none}
+  .rep a.link:hover{color:var(--teal-strong);text-decoration:underline}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px}
+  .note b{color:var(--ink)}
+  .footer{margin-top:8px;font-size:12px;color:#8a9a96;text-align:center;padding:14px 0 4px}
+  @media(max-width:520px){.hero h1{font-size:20px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>📚 Deep Research ｜ 深度研究报告库</h1>
+    <div class="sub">深度研究专题报告 · 多源交叉验证 · 数据来源与推断边界全标注</div>
+    <div class="tagline">点击下方报告卡片，即可在线查看完整研究报告（各版本均归档保留）</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">1</span>最新深度研究报告</h2>
+    <div class="grid" id="reportGrid"><!-- 动态渲染 --></div>
+    <div class="note">📌 <b>版本说明：</b>每份报告的各版本（v1/v2/…）均独立归档，卡片链接默认指向最新版本；报告内均含"数据与资料来源"专章及推断边界说明。</div>
+  </div>
+
+  <div class="footer">Deep Research · GitHub Pages 报告库 ｜ 新报告将在此持续更新</div>
+
+</div>
+
+<script>
+// ===== 报告清单（新增报告时在此追加一条即可，无需改动页面结构） =====
+const REPORTS = [
+  {
+    company: "国产光刻胶市场深度研究",
+    code: "光刻胶专题 · 30+独立来源",
+    type: "市场深度研究",
+    date: "2026-11-02",
+    isNew: true,
+    links: [
+      { name: "v2（最新）", url: "国产光刻胶市场深度研究_v2.pdf" },
+      { name: "v1", url: "国产光刻胶市场深度研究_v1.pdf" }
+    ],
+    desc: "国产光刻胶市场全景研究：四标的财务与'好生意'判断、全球竞争格局与空间测算、技术代际国产化进程、爆发时点与投资路径；v2新增南大光电爬坡锚推断鼎龙光刻胶营收（含推断逻辑与六条边界）及对鼎龙估值影响。"
+  }
+];
+
+// 渲染
+const grid = document.getElementById('reportGrid');
+grid.innerHTML = REPORTS.map(r =>
+  `<div class="rep">
+     <div><span class="ctg ctg-mid">${r.type}</span>${r.isNew ? '<span class="ctg ctg-new">最新</span>' : ''}</div>
+     <h3>${r.company}</h3>
+     <div class="co">${r.code} · ${r.date}</div>
+     <div class="desc">${r.desc}</div>
+     ${r.links
+       ? `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px">${r.links.map(l => `<a class="link" style="margin-top:0" href="${l.url}" target="_blank">${l.name} →</a>`).join('')}</div>`
+       : `<a class="link" href="${r.url}" target="_blank">查看报告 →</a>`}
+   </div>`
+).join('');
+</script>
+</body>
+</html>
